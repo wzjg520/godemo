@@ -254,7 +254,7 @@ func (sched *myScheduler) activateAnalyzers(respParsers []anlz.ParseResponse) {
 		for {
 			resp, ok := <-sched.getRespChan()
 			if !ok {
-				//continue
+				break
 			}
 			go sched.analyze(respParsers, resp)
 		}

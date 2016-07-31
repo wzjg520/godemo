@@ -15,11 +15,15 @@ import (
 	"net/url"
 	"strings"
 	"time"
+	"flag"
+	"os"
 )
 
 const (
 	HTTP_SUCCESS = 200
 )
+
+var host *string = flag.String("host", "", "host")
 
 // 日志记录器
 var logger logging.Logger = logging.NewSimpleLogger()
@@ -39,6 +43,7 @@ func processItem(item base.Item) (result base.Item, err error) {
 	}
 
 	time.Sleep(10 * time.Millisecond)
+	fmt.Println(result)
 	return result, nil
 }
 
@@ -146,6 +151,14 @@ func record(level byte, content string) {
 }
 
 func main() {
+
+	flag.Parse()
+	if *host == "" {
+		err := errors.New("host is valid!")
+		fmt.Println(err)
+		os.Exit(-1)
+	}
+
 	// 创建调度器
 	scheduler := sched.NewScheduler()
 
@@ -168,7 +181,7 @@ func main() {
 	httpClientGenerator := genHttpClient
 	respParsers := getResponseParsers()
 	itemProcessors := getItemProcessors()
-	startUrl := "http://zixun.jia.com/"
+	startUrl := "http://news.163.com/"
 	firstHttpReq, err := http.NewRequest("GET", startUrl, nil)
 	if err != nil {
 		logger.Errorln(err)
