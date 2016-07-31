@@ -5,6 +5,7 @@ import (
 	"log"
 	"runtime"
 	"strings"
+	"os"
 )
 
 type Position uint
@@ -16,6 +17,13 @@ const (
 
 func init() {
 	log.SetFlags(log.LstdFlags)
+	filename := "crawer.log"
+	file, err := os.Create(filename)
+	if err != nil {
+		panic(err)
+	}
+	defer file.Close()
+	log.SetOutput(file)
 }
 
 type Logger interface {
