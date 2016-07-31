@@ -72,7 +72,7 @@ func parseForATag(httpResp *http.Response, respDepth uint32) ([]base.Data, []err
 		errs = append(errs, err)
 		return dataList, errs
 	}
-	// 查找a标签并提取链接地址                                                 
+	// 查找a标签并提取链接地址
 	doc.Find("a").Each(func(index int, sel *goquery.Selection) {
 		href, exists := sel.Attr("href")
 		if !exists || href == "" || href == "#" || href == "/" {
