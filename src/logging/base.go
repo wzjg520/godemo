@@ -17,13 +17,6 @@ const (
 
 func init() {
 	log.SetFlags(log.LstdFlags)
-	filename := "crawer.log"
-	file, err := os.Create(filename)
-	if err != nil {
-		panic(err)
-	}
-	defer file.Close()
-	log.SetOutput(file)
 }
 
 type Logger interface {
@@ -87,7 +80,18 @@ func generateLogContent(
 }
 
 func NewSimpleLogger() Logger {
-	logger := &ConsoleLogger{}
+	filename := "crawer.log"
+	file, err := os.Create(filename)
+	if err != nil {
+		panic(err)
+	}
+	//defer file.Close()
+	loggering := &log.Logger{}
+	loggering.SetOutput(file)
+
+	logger := &ConsoleLogger{
+		log: loggering,
+	}
 	logger.SetPosition(POSITION_SINGLE)
 	return logger
 }

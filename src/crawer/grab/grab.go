@@ -23,7 +23,7 @@ const (
 	HTTP_SUCCESS = 200
 )
 
-var host *string = flag.String("host", "", "host")
+var host *string = flag.String("host", "news.163.com", "host")
 
 // 日志记录器
 var logger logging.Logger = logging.NewSimpleLogger()
@@ -43,7 +43,6 @@ func processItem(item base.Item) (result base.Item, err error) {
 	}
 
 	time.Sleep(10 * time.Millisecond)
-	fmt.Println(result)
 	return result, nil
 }
 

@@ -68,7 +68,7 @@ type myScheduler struct {
 	dlpool        dl.PageDownloaderPool // 网页下载器池
 	analyzerPool  anlz.AnalyzerPool     // 分析器池
 	itemPipeline  ipl.ItemPipeline      // 条目处理管道
-	reqCache      requestCache          // 已请求的url的字典
+	reqCache      requestCache          // 请求缓存
 	urlMap        map[string]bool       // 已请求的url的字典
 	running       uint32                // 运行标记0 未运行 1已运行 2已停止
 

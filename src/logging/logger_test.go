@@ -6,6 +6,10 @@ import (
 	"runtime/debug"
 	"strings"
 	"testing"
+
+	//"os"
+	//"log"
+	"os"
 )
 
 var count = 0
@@ -17,26 +21,40 @@ func TestConsoleLogger(t *testing.T) {
 			t.Errorf("Fatal Error: %s\n", err)
 		}
 	}()
-	logger := &ConsoleLogger{}
+
+	logger := NewSimpleLogger()
+	//filename := "crawer.log"
+	//file, err := os.Create(filename)
+	//if err != nil {
+	//	panic(err)
+	//}
+	//defer file.Close()
+	//logging := &log.Logger{}
+	//logging.SetOutput(file)
+	//logger := &ConsoleLogger{
+	//	log: logging,
+	//}
 	//logger.SetDefaultInvokingNumber()
 	//expectedInvokingNumber := uint(1)
 	//currentInvokingNumber := logger.getInvokingNumber()
 	//if currentInvokingNumber != expectedInvokingNumber {
 	//	t.Errorf("The current invoking number %d should be %d!", currentInvokingNumber, expectedInvokingNumber)
 	//}
-	testLogger(t, logger)
+
+	logger.Info("hello, world")
+	//testLogger(t, logger)
 }
 
-func TestLogManager(t *testing.T) {
-	defer func() {
-		if err := recover(); err != nil {
-			debug.PrintStack()
-			t.Errorf("Fatal Error: %s\n", err)
-		}
-	}()
-	logger := &LogManager{loggers: []Logger{&ConsoleLogger{}}}
-	testLogger(t, logger)
-}
+//func TestLogManager(t *testing.T) {
+//	defer func() {
+//		if err := recover(); err != nil {
+//			debug.PrintStack()
+//			t.Errorf("Fatal Error: %s\n", err)
+//		}
+//	}()
+//	logger := &LogManager{loggers: []Logger{&ConsoleLogger{}}}
+//	testLogger(t, logger)
+//}
 
 func testLogger(t *testing.T, logger Logger) {
 	var format string
