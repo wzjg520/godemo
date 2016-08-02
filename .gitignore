@@ -33,3 +33,4 @@ src/testing/demo/
 *golang.org
 *.log
 
+/src/crawer/grab/a.go
