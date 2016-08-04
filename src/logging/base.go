@@ -3,9 +3,9 @@ package logging
 import (
 	"fmt"
 	"log"
+	"os"
 	"runtime"
 	"strings"
-	"os"
 )
 
 type Position uint

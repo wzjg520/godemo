@@ -4,7 +4,7 @@ import "log"
 
 type ConsoleLogger struct {
 	position Position
-	log *log.Logger
+	log      *log.Logger
 }
 
 func (logger *ConsoleLogger) GetPosition() Position {

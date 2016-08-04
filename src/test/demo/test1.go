@@ -6,7 +6,6 @@ import (
 	"fmt"
 )
 
-
 type struct1 struct {
 	name string
 }
@@ -23,14 +22,11 @@ func (s1 *struct1) getName() {
 	fmt.Println(s1.name)
 }
 
-
 type struct2 struct {
 	name string
 	like string
-	d struct1
+	d    struct1
 }
-
-
 
 func main() {
 	//file, err := os.Create("data.log")
@@ -41,7 +37,6 @@ func main() {
 	//
 	//log.SetOutput(file)
 	//log.Println("hello, world")
-
 
 	c := &struct2{}
 	fmt.Println(c)

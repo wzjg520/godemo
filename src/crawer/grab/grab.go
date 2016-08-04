@@ -7,16 +7,16 @@ import (
 	sched "crawer/scheduler"
 	"crawer/tool"
 	"errors"
+	"flag"
 	"fmt"
 	"github.com/PuerkitoBio/goquery"
 	"io"
 	"logging"
 	"net/http"
 	"net/url"
+	"os"
 	"strings"
 	"time"
-	"flag"
-	"os"
 )
 
 const (
