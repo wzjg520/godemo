@@ -32,5 +32,10 @@ src/testing/demo/
 *github.com
 *golang.org
 *.log
+*.json
+*.jpg
+*.jpeg
+*.png
+*.gif
 
 /src/crawer/grab/a.go

@@ -5,14 +5,16 @@ import (
 	"encoding/json"
 	"io"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"os"
 	"strings"
 	"math/rand"
 	"strconv"
+	"time"
+	"net"
 )
 
+// 解析http请求中的body体，这里用来解析json数组
 func parseBodySlice(r *http.Request, m *[]string) error {
 	var buf []byte
 	//var buf2 bytes.Buffer
@@ -39,6 +41,7 @@ func parseBodySlice(r *http.Request, m *[]string) error {
 	return nil
 }
 
+// 解析http请求body中数据，机械map类型
 func parseBodyMap(r *http.Request, m *map[string]interface{}) error {
 	buf, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -53,19 +56,50 @@ func parseBodyMap(r *http.Request, m *map[string]interface{}) error {
 	}
 	return nil
 }
-
-func getImg(url string) (n int64, err error) {
+// 根据图片地址下载图片
+func getImg(url string) (n int64, saveUrl string, err error) {
 	path := strings.Split(url, "/")
-	var name string
 	if len(path) > 1 {
-		name = strconv.Itoa(rand.Int()) + "_" + path[len(path)-1]
+		saveUrl = strconv.Itoa(rand.Int()) + "_" + path[len(path)-1]
 	}
-	log.Println(name)
-	out, err := os.Create(name)
+	
+	out, err := os.Create(saveUrl)
+	if err != nil {
+		return 0, "", err
+	}
 	defer out.Close()
-	resp, err := http.Get(url)
+	
+	httpClient := TimeoutHttpClient(10 * time.Minute)
+	
+	resp, err := httpClient.Get(url)
+	if err != nil {
+		return 0, "", err
+	}
 	defer resp.Body.Close()
 	pix, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return 0, "", err
+	}
 	n, err = io.Copy(out, bytes.NewReader(pix))
+	if err != nil {
+		return 0, "", err
+	}
 	return
+}
+
+func TimeoutHttpClient(timeout time.Duration) *http.Client {
+	transport := &http.Transport{
+		Dial: func(network, addr string) (net.Conn, error) {
+			c, err := net.DialTimeout(network, addr, timeout)
+			if err != nil {
+				return nil ,err
+			}
+			return c, nil
+		},
+	}
+	client := http.Client{
+		Transport: transport,
+		Timeout:   timeout,
+	}
+	return &client
 }

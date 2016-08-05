@@ -31,13 +31,12 @@ func wrapHandler(fn http.HandlerFunc) http.HandlerFunc {
 func main() {
 
 	httpHandler := hd.NewHttpHandler()
-	httpHandler.Init(10, 30)
-
 	mux := http.NewServeMux()
 	mux.HandleFunc("/batch/save_images", wrapHandler(httpHandler.SaveImages))
+	log.Println("start listen ", PORT)
 	err := http.ListenAndServe(PORT, mux)
 	if err != nil {
 		log.Fatal(err.Error())
 	}
-	log.Println("start listen ", PORT)
+	
 }
