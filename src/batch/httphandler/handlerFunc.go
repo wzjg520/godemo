@@ -3,21 +3,26 @@ package httphandler
 import (
 	"net/http"
 	//"encoding/json"
+	"encoding/json"
 	"io"
 	"log"
-	"encoding/json"
 	"runtime"
 	"time"
 )
 
 type HttpHandler struct {
+	cacheDir    string
+	scriptPath string
 	RequestChan chan string
 	ResultChan  chan map[string]string
 }
 
 // 生成资源对象
-func NewHttpHandler() *HttpHandler {
-	return &HttpHandler{}
+func NewHttpHandler(cacheDir string, scriptPath string) *HttpHandler {
+	return &HttpHandler{
+		cacheDir: cacheDir,
+		scriptPath: scriptPath,
+	}
 }
 
 // 初始化通道
@@ -44,21 +49,28 @@ func (hd *HttpHandler) SaveImages(w http.ResponseWriter, r *http.Request) {
 			io.WriteString(w, err.Error())
 			return
 		}
-		
+
 		length := len(urls)
 		hd.InitChan(length, length)
 		defer hd.CloseChan()
 		start := time.Now().Unix()
-		
+
 		for _, v := range urls {
 			go func(v string) {
-				_, saveUrl, err := getImg(v)
+				defer func() {
+					if p := recover(); p != nil {
+						log.Println(p)
+					}
+				}()
+				_, saveUrl, err := getImg(v, hd.cacheDir, hd.scriptPath)
+
+
 				if err != nil {
 					log.Printf("save %s error, error:%v", saveUrl, err)
 				} else {
 					log.Printf("save %s success.", saveUrl)
 				}
-				hd.ResultChan <- map[string]string{v : saveUrl}
+				hd.ResultChan <- map[string]string{v: saveUrl}
 			}(v)
 		}
 		log.Printf("run goroutine num: %d", runtime.NumGoroutine())
