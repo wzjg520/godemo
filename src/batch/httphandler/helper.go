@@ -7,16 +7,16 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
+	"log"
 	"math/rand"
 	"net"
 	"net/http"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"strconv"
 	"strings"
 	"time"
-	"os/exec"
-	"log"
 )
 
 // 解析http请求中的body体，这里用来解析json数组
@@ -79,7 +79,6 @@ func getImg(url string, cacheDir string, scriptPath string) (n int64, saveUrl st
 		return 0, "", err
 	}
 
-
 	httpClient := TimeoutHttpClient(10 * time.Minute)
 
 	resp, err := httpClient.Get(url)
@@ -99,7 +98,6 @@ func getImg(url string, cacheDir string, scriptPath string) (n int64, saveUrl st
 	saveUrl, err = execPhpScript(saveUrl, scriptPath)
 	return
 }
-
 
 // http 请求设置超时
 func TimeoutHttpClient(timeout time.Duration) *http.Client {
@@ -121,7 +119,7 @@ func TimeoutHttpClient(timeout time.Duration) *http.Client {
 
 // 执行php脚本
 func execPhpScript(url string, scriptPath string) (saveUrl string, err error) {
-	if (strings.TrimSpace(url) == "") {
+	if strings.TrimSpace(url) == "" {
 		return "", nil
 	}
 	data, err := exec.Command("php", "-f", scriptPath, url).Output()

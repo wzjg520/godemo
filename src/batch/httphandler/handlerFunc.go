@@ -12,7 +12,7 @@ import (
 
 type HttpHandler struct {
 	cacheDir    string
-	scriptPath string
+	scriptPath  string
 	RequestChan chan string
 	ResultChan  chan map[string]string
 }
@@ -20,7 +20,7 @@ type HttpHandler struct {
 // 生成资源对象
 func NewHttpHandler(cacheDir string, scriptPath string) *HttpHandler {
 	return &HttpHandler{
-		cacheDir: cacheDir,
+		cacheDir:   cacheDir,
 		scriptPath: scriptPath,
 	}
 }
@@ -29,8 +29,19 @@ func NewHttpHandler(cacheDir string, scriptPath string) *HttpHandler {
 func (hd *HttpHandler) InitChan(requestChanLength int, resultChanLength int) {
 	log.Printf("init resultChan length %d", resultChanLength)
 	log.Printf("init a requestChan length %d", requestChanLength)
-	hd.RequestChan = make(chan string, requestChanLength)
-	hd.ResultChan = make(chan map[string]string, resultChanLength)
+
+	if (resultChanLength > 50) {
+		hd.ResultChan = make(chan map[string]string, 50)
+	} else {
+		hd.ResultChan = make(chan map[string]string, resultChanLength)
+	}
+
+	if (requestChanLength > 50) {
+		hd.RequestChan = make(chan string, 50)
+	} else {
+		hd.RequestChan = make(chan string, requestChanLength)
+	}
+
 }
 
 // 关闭通道
@@ -63,7 +74,6 @@ func (hd *HttpHandler) SaveImages(w http.ResponseWriter, r *http.Request) {
 					}
 				}()
 				_, saveUrl, err := getImg(v, hd.cacheDir, hd.scriptPath)
-
 
 				if err != nil {
 					log.Printf("save %s error, error:%v", saveUrl, err)
