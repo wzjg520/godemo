@@ -7,12 +7,12 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
-	"log"
+	//"log"
 	"math/rand"
 	"net"
 	"net/http"
 	"os"
-	"os/exec"
+	//"os/exec"
 	"path/filepath"
 	"strconv"
 	"strings"
@@ -122,10 +122,12 @@ func execPhpScript(url string, scriptPath string) (saveUrl string, err error) {
 	if strings.TrimSpace(url) == "" {
 		return "", nil
 	}
-	data, err := exec.Command("php", "-f", scriptPath, url).Output()
-	if err != nil {
-		log.Println(err)
-	}
+	//data, err := exec.Command("php", "-f", scriptPath, url).Output()
+	//if err != nil {
+	//	log.Println(err)
+	//}
+	data := url
+	err = nil
 
 	return string(data), err
 }

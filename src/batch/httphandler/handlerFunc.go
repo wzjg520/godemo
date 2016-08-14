@@ -78,7 +78,7 @@ func (hd *HttpHandler) SaveImages(w http.ResponseWriter, r *http.Request) {
 				if err != nil {
 					log.Printf("save %s error, error:%v", saveUrl, err)
 				} else {
-					log.Printf("save %s success.", saveUrl)
+					//log.Printf("save %s success.", saveUrl)
 				}
 				hd.ResultChan <- map[string]string{v: saveUrl}
 			}(v)

@@ -39,3 +39,6 @@ src/testing/demo/
 *.gif
 
 /src/crawer/grab/a.go
+/src/goweb/
+/src/poolproxy/
+/src/gopkg.in/
