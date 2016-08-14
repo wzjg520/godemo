@@ -7,16 +7,17 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
-	//"log"
+	"log"
 	"math/rand"
 	"net"
 	"net/http"
 	"os"
-	//"os/exec"
+	"os/exec"
 	"path/filepath"
 	"strconv"
 	"strings"
 	"time"
+	"log"
 )
 
 // 解析http请求中的body体，这里用来解析json数组
@@ -122,12 +123,10 @@ func execPhpScript(url string, scriptPath string) (saveUrl string, err error) {
 	if strings.TrimSpace(url) == "" {
 		return "", nil
 	}
-	//data, err := exec.Command("php", "-f", scriptPath, url).Output()
-	//if err != nil {
-	//	log.Println(err)
-	//}
-	data := url
-	err = nil
+	data, err := exec.Command("php", "-f", scriptPath, url).Output()
+	if err != nil {
+		log.Println(err)
+	}
 
 	return string(data), err
 }
