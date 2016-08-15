@@ -17,7 +17,6 @@ import (
 	"strconv"
 	"strings"
 	"time"
-	"log"
 )
 
 // 解析http请求中的body体，这里用来解析json数组
