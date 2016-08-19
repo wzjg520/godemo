@@ -16,8 +16,8 @@ var summaryForMonitoring = "Monitor - Collected information[%d]:\n" +
 
 // 最大空闲计数的消息模板
 var msgReachMaxIdleCount = "The scheduler has been idle for a period of time" +
-	" (about %s)." +
-	" Now consider what stop it."
+	"  (about %s)." +
+	"  Now consider what stop it."
 
 // 停止调度器的消息模板
 var msgStopScheduler = "Stop scheduler...%s."

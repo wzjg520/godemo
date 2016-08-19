@@ -3,7 +3,6 @@ package logging
 import (
 	"fmt"
 	"log"
-	"os"
 	"runtime"
 	"strings"
 )
@@ -80,18 +79,7 @@ func generateLogContent(
 }
 
 func NewSimpleLogger() Logger {
-	filename := "crawer.log"
-	file, err := os.Create(filename)
-	if err != nil {
-		panic(err)
-	}
-	//defer file.Close()
-	loggering := &log.Logger{}
-	loggering.SetOutput(file)
-
-	logger := &ConsoleLogger{
-		log: loggering,
-	}
+	logger := &ConsoleLogger{}
 	logger.SetPosition(POSITION_SINGLE)
 	return logger
 }

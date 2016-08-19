@@ -9,12 +9,13 @@ import (
 	"runtime/debug"
 )
 
+// port 端口
 const (
 	PORT = ":3210"
 )
 
-var cacheDir *string = flag.String("d", "/tmp", "临时文件存放目录")
-var scriptPath *string = flag.String("f", "/home/john/save_img.php", "执行脚本路径")
+var cacheDir = flag.String("d", "/tmp", "临时文件存放目录")
+var scriptPath = flag.String("f", "/home/john/save_img.php", "执行脚本路径")
 
 func wrapHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
@@ -28,7 +29,6 @@ func wrapHandler() http.HandlerFunc {
 				log.Println(string(debug.Stack()))
 			}
 		}(hdl)
-
 
 	}
 }

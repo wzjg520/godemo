@@ -114,7 +114,7 @@ func (chanman *myChannelManager) checkStatus() error {
 	return errors.New(errMsg)
 
 }
-
+// 获得请求chan
 func (chanman *myChannelManager) ReqChan() (chan base.Request, error) {
 	chanman.rwmutex.RLock()
 	defer chanman.rwmutex.RUnlock()
@@ -123,7 +123,7 @@ func (chanman *myChannelManager) ReqChan() (chan base.Request, error) {
 	}
 	return chanman.reqCh, nil
 }
-
+// 获得响应chan
 func (chanman *myChannelManager) RespChan() (chan base.Response, error) {
 	chanman.rwmutex.RLock()
 	defer chanman.rwmutex.RUnlock()
@@ -132,7 +132,7 @@ func (chanman *myChannelManager) RespChan() (chan base.Response, error) {
 	}
 	return chanman.respCh, nil
 }
-
+// 获得条目chan
 func (chanman *myChannelManager) ItemChan() (chan base.Item, error) {
 	chanman.rwmutex.RLock()
 	defer chanman.rwmutex.RUnlock()

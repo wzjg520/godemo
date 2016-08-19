@@ -42,3 +42,8 @@ src/testing/demo/
 /src/goweb/
 /src/poolproxy/
 /src/gopkg.in/
+html
+src/batch/batch/debug                                                          
+src/crawer/grab/debug
+src/sourcegraph.com/
+

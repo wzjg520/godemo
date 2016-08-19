@@ -39,7 +39,7 @@ func NewPageDownloader(client *http.Client) PageDownloader {
 func (dl *myPageDownloader) Id() uint32 {
 	return dl.id
 }
-
+// 开始下载
 func (dl *myPageDownloader) Download(req base.Request) (*base.Response, error) {
 	httpReq := req.HttpReq()
 	logger.Infof("Do the request (url=%s)... \n", httpReq.URL)

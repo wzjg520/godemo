@@ -52,7 +52,7 @@ func (ss *mySchedSummary) getSummary(detail bool) string {
 		prefix + "Downloader pool: %d/%d \n" +
 		prefix + "Analyzer pool: %d/%d \n" +
 		prefix + "Item pipeline: %s \n" +
-		prefix + "Urls(%d): %s " +
+		prefix + "Urls(%d): %s \n" +
 		prefix + "Stop sign: %s \n"
 	return fmt.Sprintf(template,
 		func() bool {

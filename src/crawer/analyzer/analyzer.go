@@ -34,7 +34,7 @@ type myAnalyzer struct {
 func (a *myAnalyzer) Id() uint32 {
 	return a.id
 }
-
+// 分析response数据
 func (a *myAnalyzer) Analyze(
 	resParses []ParseResponse,
 	resp base.Response) (dataList []base.Data, errorList []error) {

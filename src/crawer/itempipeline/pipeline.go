@@ -53,6 +53,7 @@ type myItemPipeline struct {
 	processingNumber uint64        // 正被处理的条目的数量
 }
 
+// 发送并处理条目
 func (ip *myItemPipeline) Send(item base.Item) []error {
 	atomic.AddUint64(&ip.processingNumber, 1)
 	defer atomic.AddUint64(&ip.processingNumber, ^uint64(0))
