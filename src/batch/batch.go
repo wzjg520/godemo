@@ -24,6 +24,7 @@ var scriptPath = flag.String("f", "/home/john/save_img.php", "执行脚本路径
 func wrapHandler(pool downloaderPool) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		log.Println(r.Method, " ", r.Proto, " ", r.URL.Scheme, " ", r.Host, " ", r.URL.Path)
+		urlsChan := make(chan map[string]string, 1)
 		if r.Method == "POST" {
 			var urls []string
 			err := parseBodySlice(r, &urls)
@@ -34,10 +35,7 @@ func wrapHandler(pool downloaderPool) http.HandlerFunc {
 			}
 
 			start := time.Now().Unix()
-			urlsChan := make(chan map[string]string, 1)
-			defer func() {
-				close(urlsChan)
-			}()
+
 			for _, v := range urls {
 				go startDownload(pool, urlsChan, v)
 			}
@@ -66,6 +64,7 @@ func wrapHandler(pool downloaderPool) http.HandlerFunc {
 				log.Println("WARN: panic in %v - %v", pool, e)
 				log.Println(string(debug.Stack()))
 			}
+			close(urlsChan)
 		}()
 	}
 }

@@ -79,7 +79,7 @@ func getImg(url string, cacheDir string, scriptPath string) (n int64, saveUrl st
 		return 0, "", err
 	}
 
-	httpClient := TimeoutHttpClient(10 * time.Minute)
+	httpClient := TimeoutHttpClient(3 * time.Minute)
 
 	resp, err := httpClient.Get(url)
 	if err != nil {
